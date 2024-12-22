@@ -1,0 +1,54 @@
+<div class="d-flex justify-content-center align-items-center vh-100">
+  <div class="card shadow p-4" style="max-width: 400px; width: 100%">
+    <h4 class="text-center mb-4">Cadastro de Funcionário</h4>
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <div class="mb-3">
+        <label for="nome" class="form-label">Nome Completo:</label>
+        <input
+          type="text"
+          class="form-control"
+          id="nome"
+          placeholder="Digite seu nome completo"
+          formControlName="nome"
+        />
+        <div *ngIf="f['nome'].invalid && f['nome'].touched" class="text-danger">
+          Nome deve ter entre 3 e 20 caracteres.
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="email" class="form-label">Email:</label>
+        <input
+          type="email"
+          class="form-control"
+          id="email"
+          placeholder="Digite seu email"
+          formControlName="email"
+        />
+        <div
+          *ngIf="f['email'].invalid && f['email'].touched"
+          class="text-danger"
+        >
+          Insira um email válido.
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="senha" class="form-label">Senha:</label>
+        <input
+          type="password"
+          class="form-control"
+          id="senha"
+          placeholder="Digite sua senha"
+          formControlName="senha"
+        />
+        <div
+          *ngIf="f['senha'].invalid && f['senha'].touched"
+          class="text-danger"
+        >
+          Senha deve ter entre 8 e 16 caracteres, incluindo letras, números e
+          símbolos.
+        </div>
+      </div>
+      <button type="submit" class="btn btn-primary w-100">Cadastrar</button>
+    </form>
+  </div>
+</div>
