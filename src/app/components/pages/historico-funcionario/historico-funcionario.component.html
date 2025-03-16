@@ -8,8 +8,7 @@
         <th>Nome</th>
         <th>Operação</th>
         <th>Data</th>
-        <th>Latitude</th>
-        <th>Longitude</th>
+        <th>Endereço</th>
       </tr>
     </thead>
     <tbody>
@@ -17,8 +16,7 @@
         <td>{{ item.nome }}</td>
         <td>{{ item.operacao }}</td>
         <td>{{ item.data | date : "dd/MM/yyyy HH:mm" }}</td>
-        <td>{{ item.latitude }}</td>
-        <td>{{ item.longitude }}</td>
+        <td>{{ item.address }}</td>
       </tr>
     </tbody>
   </table>
@@ -27,4 +25,10 @@
   <p *ngIf="historico.length === 0">
     Nenhum histórico encontrado para este funcionário.
   </p>
+
+  <div
+    *ngIf="historico.length > 0"
+    id="map"
+    style="height: 400px; margin-top: 20px"
+  ></div>
 </div>

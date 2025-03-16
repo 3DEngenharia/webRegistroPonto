@@ -9,6 +9,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
+import { StorageService } from '../../../services/storage.service';
 
 @Component({
   selector: 'app-autenticar-funcionario',
@@ -17,7 +18,11 @@ import { Router, RouterLink } from '@angular/router';
   styleUrl: './autenticar-funcionario.component.css',
 })
 export class AutenticarFuncionarioComponent {
-  constructor(private httpClient: HttpClient, private router: Router) {}
+  constructor(
+    private httpClient: HttpClient,
+    private router: Router,
+    private storageService: StorageService
+  ) {}
 
   formulario = new FormGroup({
     email: new FormControl('', [Validators.required, Validators.email]),
@@ -35,7 +40,7 @@ export class AutenticarFuncionarioComponent {
 
   ngOnInit(): void {
     // Verifica se a chave 'funcionarioId' existe no localStorage
-    const funcionarioId = localStorage.getItem('funcionarioId');
+    const funcionarioId = this.storageService.getItem('funcionarioId');
 
     // Se existir, navega para a página de marcar ponto
     if (funcionarioId) {
@@ -54,7 +59,7 @@ export class AutenticarFuncionarioComponent {
             const funcionarioId = response.id;
 
             if (funcionarioId) {
-              localStorage.setItem('funcionarioId', funcionarioId);
+              this.storageService.setItem('funcionarioId', funcionarioId);
             }
 
             this.router.navigate(['/pages/marcar-ponto', funcionarioId]);

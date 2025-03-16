@@ -12,7 +12,7 @@ import { Router, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-criar-funcionario',
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, RouterLink],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule],
   templateUrl: './criar-funcionario.component.html',
   styleUrl: './criar-funcionario.component.css',
 })

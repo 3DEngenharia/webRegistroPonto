@@ -4,6 +4,7 @@ import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { Router, RouterLink } from '@angular/router';
+import { StorageService } from '../../../services/storage.service';
 
 @Component({
   selector: 'app-marcar-ponto',
@@ -12,19 +13,34 @@ import { Router, RouterLink } from '@angular/router';
   styleUrl: './marcar-ponto.component.css',
 })
 export class MarcarPontoComponent {
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(
+    private http: HttpClient,
+    private router: Router,
+    private storageService: StorageService
+  ) {}
 
-  selectedAction: string = 'EXPEDIENTE_INICIO';
-  id: string = '';
+  public selectedAction: string = 'EXPEDIENTE_INICIO';
+  public id: string = '';
+  public registrationToday: string[] = [];
 
   ngOnInit(): void {
     // Verifica se a chave 'funcionarioId' existe no localStorage
-    const funcionarioId = localStorage.getItem('funcionarioId');
+    const funcionarioId = this.storageService.getItem('funcionarioId');
 
     // Se existir, navega para a página de marcar ponto
     if (!funcionarioId) {
       this.router.navigate(['/pages/funcionarios/autenticar']);
     }
+
+    this.http
+      .get(`http://localhost:8080/obterPorIdDeFuncionarioHoje/${funcionarioId}`)
+      .subscribe({
+        next: (data: any) => {
+          console.log(data);
+
+          this.registrationToday = data;
+        },
+      });
 
     this.id = funcionarioId as string;
   }
@@ -32,7 +48,7 @@ export class MarcarPontoComponent {
   baterPonto() {
     const operacao = this.selectedAction;
 
-    const funcionario_id = localStorage.getItem('funcionarioId');
+    const funcionario_id = this.storageService.getItem('funcionarioId');
     if (!funcionario_id) {
       alert('Funcionário não encontrado. Por favor, faça login novamente.');
       return;
@@ -77,7 +93,7 @@ export class MarcarPontoComponent {
   }
 
   logout() {
-    localStorage.removeItem('funcionarioId');
+    this.storageService.removeItem('funcionarioId');
 
     this.router.navigate(['/pages/funcionarios/autenticar']);
   }
