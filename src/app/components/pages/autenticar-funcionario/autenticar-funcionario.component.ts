@@ -13,6 +13,7 @@ import { StorageService } from '../../../services/storage.service';
 
 @Component({
   selector: 'app-autenticar-funcionario',
+  standalone: true,
   imports: [RouterLink, CommonModule, FormsModule, ReactiveFormsModule],
   templateUrl: './autenticar-funcionario.component.html',
   styleUrl: './autenticar-funcionario.component.css',
